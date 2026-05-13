@@ -1,4 +1,3 @@
-"""Task management service with optimized queries and caching."""
 import logging
 from sqlalchemy.orm import joinedload
 from sqlalchemy import asc, desc
