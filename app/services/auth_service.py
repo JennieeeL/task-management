@@ -1,4 +1,3 @@
-"""Authentication service — registration and login."""
 import logging
 from flask_jwt_extended import create_access_token, create_refresh_token
 from app.extensions import db
