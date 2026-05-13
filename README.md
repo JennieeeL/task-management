@@ -183,7 +183,6 @@ After running `python example.py`, use these credentials:
 ### Performance
 - **Redis caching** on list endpoints with pattern-based invalidation
 - **Composite indexes** on `(project_id, status)` and `(assignee_id, status)` for common query patterns
-- **Eager loading** (`joinedload`) on task queries to prevent N+1 queries
 - **Pagination** on all list endpoints (max 100 per page)
 
 ### Security
@@ -192,11 +191,9 @@ After running `python example.py`, use these credentials:
 - **Rate limiting** — 5/min on register, 10/min on login, 200/min global
 - **Input validation** via Marshmallow schemas on all endpoints
 - **Soft delete** for users (deactivation, not data loss)
-- **CORS** enabled for cross-origin requests
 
 ### Architecture
 - **Service layer** separates business logic from route handlers
-- **App factory** pattern for testability
 - **Blueprint-based** routing for modular API organization
 - **Consistent error responses** with error codes via global error handlers
 - **Graceful Redis fallback** — app works without Redis (caching disabled)
