@@ -1,4 +1,3 @@
-"""Flask application factory."""
 import logging
 from flask import Flask
 from app.config import config_map
@@ -8,7 +7,6 @@ from app.api import register_blueprints
 
 
 def create_app(config_name: str = 'default') -> Flask:
-    """Create and configure the Flask application."""
     app = Flask(__name__)
     app.config.from_object(config_map.get(config_name, config_map['default']))
 
@@ -34,8 +32,7 @@ def create_app(config_name: str = 'default') -> Flask:
     register_error_handlers(app)
     register_blueprints(app)
 
-    # Import models so SQLAlchemy registers them
-    from app import models as _models  # noqa: F401
+    from app import models as _models  
 
     # Health check
     @app.route('/health')
