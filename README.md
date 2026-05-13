@@ -17,19 +17,17 @@ task-management-api/
 │   │   └── tasks.py         # Task CRUD + filtering
 │   ├── models/              # SQLAlchemy models
 │   │   ├── user.py          # User with bcrypt passwords
-│   │   ├── project.py       # Project with members
-│   │   ├── task.py          # Task with composite indexes
-│   │   └── associations.py  # M2M project_members table
+│   │   ├── project.py       # Project with M2M members
+│   │   └── task.py          # Task with composite indexes
 │   ├── schemas/             # Marshmallow validation
 │   ├── services/            # Business logic layer
 │   ├── middleware/          # Auth decorators, error handlers
 │   └── utils/               # Pagination, Redis cache
 ├── tests/
-│   ├── conftest.py          # Shared test fixtures
-│   └── integration/         # Full API endpoint tests
+│   └── test_simple.py       # Standalone integration tests
 ├── docker-compose.yml       # App + MariaDB + Redis
-├── Dockerfile               # Multi-stage Python image
-├── example.py               # Sample data 
+├── Dockerfile               # Python image with Gunicorn
+├── example.py               # Seed data script
 └── wsgi.py                  # Gunicorn entrypoint
 ```
 
@@ -40,7 +38,7 @@ task-management-api/
 | Manage users | ✅ | ❌ | ❌ |
 | View all projects | ✅ | Own only | Assigned only |
 | Create/update projects | ✅ | ✅ | ❌ |
-| Delete projects | ✅ | ❌ | ❌ |
+| Delete projects | ✅ | Own only | ❌ |
 | Assign project members | ✅ | Own projects | ❌ |
 | Create/assign tasks | ✅ | Own projects | ❌ |
 | Update tasks (all fields) | ✅ | Own projects | ❌ |
@@ -93,7 +91,7 @@ Base URL: `http://localhost:5000/api/v1`
 | POST | `/projects` | Create project | Admin, PM |
 | GET | `/projects/:id` | Get project with members | All (access-controlled) |
 | PUT | `/projects/:id` | Update project | Admin, PM (own) |
-| DELETE | `/projects/:id` | Delete project | Admin |
+| DELETE | `/projects/:id` | Delete project | Admin, PM (own) |
 | POST | `/projects/:id/members` | Add member | Admin, PM (own) |
 | DELETE | `/projects/:id/members/:uid` | Remove member | Admin, PM (own) |
 
@@ -198,7 +196,7 @@ After running `python example.py`, use these credentials:
 
 ### Architecture
 - **Service layer** separates business logic from route handlers
-- **App factory** pattern for testability and multiple configurations
+- **App factory** pattern for testability
 - **Blueprint-based** routing for modular API organization
 - **Consistent error responses** with error codes via global error handlers
 - **Graceful Redis fallback** — app works without Redis (caching disabled)
@@ -211,9 +209,6 @@ python -m pytest tests/ -v
 
 # Run with coverage
 python -m pytest tests/ --cov=app --cov-report=term-missing
-
-# Run specific test file
-python -m pytest tests/integration/test_tasks_api.py -v
 ```
 
 
