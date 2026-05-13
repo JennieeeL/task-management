@@ -13,7 +13,7 @@ PROJECT_LIST_TTL = 300
 
 
 def list_projects(current_user_id: int, current_role: str,
-                  page: int = 1, per_page: int = 20) -> tuple[dict, int]:
+                  page: int = 1, per_page: int = 20):
     """List projects based on user role."""
     cache_key = f"projects:list:{current_user_id}:{current_role}:{page}:{per_page}"
     cached = cache_get(cache_key)
@@ -39,7 +39,7 @@ def list_projects(current_user_id: int, current_role: str,
 
 
 def create_project(name: str, description: str, owner_id: int,
-                   status: str = 'active') -> tuple[dict, int]:
+                   status: str = 'active'):
     """Create a new project."""
     project = Project(name=name, description=description, owner_id=owner_id, status=status)
     db.session.add(project)
@@ -50,7 +50,7 @@ def create_project(name: str, description: str, owner_id: int,
 
 
 def get_project(project_id: int, current_user_id: int,
-                current_role: str) -> tuple[dict, int]:
+                current_role: str):
     """Get a single project with access control."""
     project = db.session.get(Project, project_id)
     if not project:
@@ -67,7 +67,7 @@ def get_project(project_id: int, current_user_id: int,
 
 
 def update_project(project_id: int, data: dict, current_user_id: int,
-                   current_role: str) -> tuple[dict, int]:
+                   current_role: str):
     """Update a project."""
     project = db.session.get(Project, project_id)
     if not project:
@@ -89,7 +89,7 @@ def update_project(project_id: int, data: dict, current_user_id: int,
     return {'message': 'Project updated successfully.', 'project': project.to_dict()}, 200
 
 
-def delete_project(project_id: int, current_user_id: int, current_role: str) -> tuple[dict, int]:
+def delete_project(project_id: int, current_user_id: int, current_role: str):
     """Delete a project (admin and PM only)."""
     project = db.session.get(Project, project_id)
     if not project:
@@ -107,7 +107,7 @@ def delete_project(project_id: int, current_user_id: int, current_role: str) -> 
 
 
 def add_member(project_id: int, user_id: int, current_user_id: int,
-               current_role: str) -> tuple[dict, int]:
+               current_role: str):
     """Add a user to a project."""
     project = db.session.get(Project, project_id)
     if not project:
@@ -134,7 +134,7 @@ def add_member(project_id: int, user_id: int, current_user_id: int,
 
 
 def remove_member(project_id: int, user_id: int, current_user_id: int,
-                  current_role: str) -> tuple[dict, int]:
+                  current_role: str):
     """Remove a user from a project."""
     project = db.session.get(Project, project_id)
     if not project:

@@ -16,7 +16,7 @@ TASK_DETAIL_TTL = 600
 
 
 def list_tasks(current_user_id: int, current_role: str,
-               filters: dict) -> tuple[dict, int]:
+               filters: dict):
     page = filters.get('page', 1)
     per_page = filters.get('per_page', 20)
     sort_by = filters.get('sort_by', 'created_at')
@@ -63,7 +63,7 @@ def list_tasks(current_user_id: int, current_role: str,
 
 
 def create_task(data: dict, current_user_id: int,
-                current_role: str) -> tuple[dict, int]:
+                current_role: str):
     """Create a new task in a project."""
     project = db.session.get(Project, data['project_id'])
     if not project:
@@ -94,7 +94,7 @@ def create_task(data: dict, current_user_id: int,
 
 
 def get_task(task_id: int, current_user_id: int,
-             current_role: str) -> tuple[dict, int]:
+             current_role: str):
     """Get a single task with access control."""
     task = db.session.query(Task).options(
         joinedload(Task.assignee),
@@ -114,7 +114,7 @@ def get_task(task_id: int, current_user_id: int,
 
 
 def update_task(task_id: int, data: dict, current_user_id: int,
-                current_role: str) -> tuple[dict, int]:
+                current_role: str):
     """Update a task with role-based field restrictions."""
     task = db.session.get(Task, task_id)
     if not task:
@@ -150,7 +150,7 @@ def update_task(task_id: int, data: dict, current_user_id: int,
 
 
 def delete_task(task_id: int, current_user_id: int,
-                current_role: str) -> tuple[dict, int]:
+                current_role: str):
     """Delete a task."""
     task = db.session.get(Task, task_id)
     if not task:

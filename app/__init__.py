@@ -6,7 +6,8 @@ from app.middleware.error_handler import register_error_handlers
 from app.api import register_blueprints
 
 
-def create_app(config_name: str = 'default') -> Flask:
+def create_app(config_name: str = 'default'):
+    """Create and configure the Flask application."""
     app = Flask(__name__)
     app.config.from_object(config_map.get(config_name, config_map['default']))
 

@@ -2,7 +2,7 @@
 from flask import Flask
 
 
-def register_blueprints(app: Flask) -> None:
+def register_blueprints(app: Flask):
     """Register all API blueprints with the app."""
     from app.api.auth import auth_bp
     from app.api.users import users_bp

@@ -30,7 +30,7 @@ class Project(db.Model):
 
     VALID_STATUSES = ('active', 'archived')
 
-    def to_dict(self, include_members: bool = False) -> dict:
+    def to_dict(self, include_members: bool = False):
         """Serialize project to dictionary."""
         data = {
             'id': self.id,
@@ -48,5 +48,5 @@ class Project(db.Model):
             data['members'] = [m.to_dict() for m in self.members]
         return data
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         return f'<Project {self.name}>'

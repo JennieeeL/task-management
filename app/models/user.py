@@ -33,15 +33,15 @@ class User(db.Model):
         kwargs.setdefault('is_active', True)
         super().__init__(**kwargs)
 
-    def set_password(self, password: str) -> None:
+    def set_password(self, password: str):
         """Hash and store the password."""
         self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
 
-    def check_password(self, password: str) -> bool:
+    def check_password(self, password: str):
         """Verify a password against the stored hash."""
         return bcrypt.check_password_hash(self.password_hash, password)
 
-    def to_dict(self) -> dict:
+    def to_dict(self):
         """Serialize user to dictionary (excludes password)."""
         return {
             'id': self.id,
@@ -53,5 +53,5 @@ class User(db.Model):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None,
         }
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         return f'<User {self.username} ({self.role})>'

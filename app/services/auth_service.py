@@ -7,7 +7,7 @@ from app.models.user import User
 logger = logging.getLogger(__name__)
 
 
-def register_user(username: str, email: str, password: str, role: str = 'user') -> tuple[dict, int]:
+def register_user(username: str, email: str, password: str, role: str = 'user'):
     """Register a new user account."""
     if User.query.filter_by(username=username).first():
         return {'error': {'code': 'CONFLICT', 'message': f'Username "{username}" is already taken.'}}, 409
@@ -24,7 +24,7 @@ def register_user(username: str, email: str, password: str, role: str = 'user') 
     return {'message': 'User registered successfully.', 'user': user.to_dict()}, 201
 
 
-def login_user(username: str, password: str) -> tuple[dict, int]:
+def login_user(username: str, password: str):
     """Authenticate user and return JWT tokens."""
     user = User.query.filter_by(username=username).first()
 

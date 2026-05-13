@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 _redis_client = None
 
 
-def _get_redis() -> redis.Redis | None:
+def _get_redis():
     """Get or create Redis client. Returns None if unavailable."""
     global _redis_client
     if _redis_client is not None:
@@ -25,13 +25,13 @@ def _get_redis() -> redis.Redis | None:
         return None
 
 
-def make_cache_key(*parts) -> str:
+def make_cache_key(*parts):
     """Create a deterministic cache key from parts."""
     raw = ':'.join(str(p) for p in parts)
     return hashlib.md5(raw.encode()).hexdigest()
 
 
-def cache_get(key: str) -> dict | None:
+def cache_get(key: str):
     """Get a value from Redis cache. Returns None on miss or error."""
     client = _get_redis()
     if not client:
@@ -43,7 +43,7 @@ def cache_get(key: str) -> dict | None:
         return None
 
 
-def cache_set(key: str, value: dict, ttl: int = 300) -> None:
+def cache_set(key: str, value: dict, ttl: int = 300):
     """Set a value in Redis cache with TTL (seconds)."""
     client = _get_redis()
     if not client:
@@ -54,7 +54,7 @@ def cache_set(key: str, value: dict, ttl: int = 300) -> None:
         logger.warning(f"Failed to set cache key: {key}")
 
 
-def cache_delete(key: str) -> None:
+def cache_delete(key: str):
     """Delete a specific cache key."""
     client = _get_redis()
     if not client:
@@ -65,7 +65,7 @@ def cache_delete(key: str) -> None:
         pass
 
 
-def cache_delete_pattern(pattern: str) -> None:
+def cache_delete_pattern(pattern: str):
     """Delete all keys matching a pattern (e.g., 'projects:*')."""
     client = _get_redis()
     if not client:

@@ -7,7 +7,7 @@ from app.utils.pagination import paginate_query
 logger = logging.getLogger(__name__)
 
 
-def list_users(page: int = 1, per_page: int = 20) -> tuple[dict, int]:
+def list_users(page: int = 1, per_page: int = 20):
     """List all users with pagination."""
     query = User.query.order_by(User.created_at.desc())
     result = paginate_query(query, page=page, per_page=per_page)
@@ -17,7 +17,7 @@ def list_users(page: int = 1, per_page: int = 20) -> tuple[dict, int]:
     }, 200
 
 
-def get_user(user_id: int) -> tuple[dict, int]:
+def get_user(user_id: int):
     """Get a single user by ID."""
     user = db.session.get(User, user_id)
     if not user:
@@ -25,7 +25,7 @@ def get_user(user_id: int) -> tuple[dict, int]:
     return {'user': user.to_dict()}, 200
 
 
-def update_user(user_id: int, data: dict) -> tuple[dict, int]:
+def update_user(user_id: int, data: dict):
     """Update user details (admin operation)."""
     user = db.session.get(User, user_id)
     if not user:
@@ -55,7 +55,7 @@ def update_user(user_id: int, data: dict) -> tuple[dict, int]:
     return {'message': 'User updated successfully.', 'user': user.to_dict()}, 200
 
 
-def delete_user(user_id: int) -> tuple[dict, int]:
+def delete_user(user_id: int):
     """Soft-delete a user by deactivating their account."""
     user = db.session.get(User, user_id)
     if not user:

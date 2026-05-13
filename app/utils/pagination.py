@@ -1,7 +1,7 @@
 """Pagination helper for SQLAlchemy queries."""
 
 
-def paginate_query(query, page: int = 1, per_page: int = 20) -> dict:
+def paginate_query(query, page: int = 1, per_page: int = 20):
     per_page = min(per_page, 100)
     pagination = query.paginate(page=page, per_page=per_page, error_out=False)
 

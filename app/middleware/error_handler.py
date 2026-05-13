@@ -6,7 +6,7 @@ from marshmallow import ValidationError
 logger = logging.getLogger(__name__)
 
 
-def register_error_handlers(app: Flask) -> None:
+def register_error_handlers(app: Flask):
     """Register error handlers on the Flask app."""
 
     @app.errorhandler(ValidationError)

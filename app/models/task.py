@@ -29,7 +29,7 @@ class Task(db.Model):
         kwargs.setdefault('status', 'todo')
         super().__init__(**kwargs)
 
-    def to_dict(self) -> dict:
+    def to_dict(self):
         """Serialize task to dictionary."""
         return {
             'id': self.id,
@@ -47,5 +47,5 @@ class Task(db.Model):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None,
         }
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         return f'<Task {self.title} ({self.status})>'
